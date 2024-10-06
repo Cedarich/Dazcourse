@@ -1,90 +1,118 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import AddButton from "./AddButton";
+import Jack from "../assests/images/Jack.png";
+import Sarah from "../assests/images/Sarah.png";
+import John from "../assests/images/John.png";
 
 const bestSellingItems = [
   {
     id: 1,
     title: "e-Commerce Mobile App design using Figma",
     author: "Jack Harper",
-    price: 20,
-    originalPrice: 30,
+    price: 2400,
+    originalPrice: 7000,
     currency: "₦",
     rating: 4.8,
     reviews: 997,
-    imageUrl: "https://via.placeholder.com/150", // Placeholder for the image
+    imageUrl: require("../assests/images/Ecom.png"),
+    authorImage: Jack,
   },
   {
     id: 2,
-    title: "Landing Page Design Guide",
+    title: "Creative Landing Page Design Guide",
     author: "Sarah Connor",
-    price: 15,
-    originalPrice: 25,
+    price: 30000,
+    originalPrice: 8000,
     currency: "₦",
     rating: 4.5,
     reviews: 500,
-    imageUrl: "https://via.placeholder.com/150", // Placeholder for the image
+    imageUrl: require("../assests/images/Landing.png"),
+    authorImage: Sarah,
   },
   {
     id: 3,
     title: "UI/UX Design Principles",
-    author: "John Doe",
-    price: 25,
-    originalPrice: 35,
+    author: "Adebayo Oluka",
+    price: 2500,
+    originalPrice: 4500,
     currency: "₦",
     rating: 4.9,
     reviews: 1200,
-    imageUrl: "https://via.placeholder.com/150", // Placeholder for the image
-  },
-  {
-    id: 4,
-    title: "Mobile App Development Basics",
-    author: "Jane Smith",
-    price: 30,
-    originalPrice: 40,
-    currency: "₦",
-    rating: 4.7,
-    reviews: 800,
-    imageUrl: "https://via.placeholder.com/150", // Placeholder for the image
-  },
-  {
-    id: 5,
-    title: "Advanced CSS Techniques",
-    author: "Emily Johnson",
-    price: 18,
-    originalPrice: 28,
-    currency: "₦",
-    rating: 4.6,
-    reviews: 650,
-    imageUrl: "https://via.placeholder.com/150", // Placeholder for the image
+    imageUrl: require("../assests/images/UX.png"),
+    authorImage: John,
   },
 ];
 
 const BestSellingCard = () => {
+  const [visible, setVisible] = useState(false);
+  const ref = useRef();
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, []);
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {bestSellingItems.slice(0, 3).map((item) => (
+      {bestSellingItems.map((item, index) => (
         <div
           key={item.id}
-          className="max-w-sm rounded-lg shadow-lg bg-white p-6"
+          ref={ref}
+          className={`max-w-sm rounded-lg shadow-lg bg-white p-6 transition-all duration-700 ease-out transform ${
+            visible
+              ? "opacity-100 translate-y-0 scale-100 animate-slideDown"
+              : "opacity-0 translate-y-[-20px] scale-95"
+          } hover:shadow-2xl hover:scale-105 hover:shadow-[#7a56d7] group`}
+          style={{
+            animationDelay: `${index * 150}ms`,
+          }}
         >
           <div className="relative mb-4">
-            <span className="absolute top-0 right-0 bg-purple-500 text-white text-xs font-bold uppercase px-2 py-1 rounded-br-lg">
-              Best Sellers
-            </span>
+            <div className="relative">
+              <span
+                className="absolute top-0 right-0 bg-[#dbd7f4] text-[#7a56d7] text-xs font-bold uppercase px-2 py-1 rounded-br-lg z-10 
+                shadow-lg cursor-pointer transition-transform transform duration-300 bounce-animation group-hover:animate-none"
+              >
+                <span className="relative z-10">Best Sellers</span>
+                <span
+                  className="absolute inset-0 rounded-br-lg bg-gradient-to-r from-[#7a56d7] to-[#c1b2e8] opacity-25 
+                  animate-gradient transition duration-500"
+                ></span>
+                <span className="absolute inset-0 rounded-br-lg opacity-30 blur-md animate-shimmer transition duration-1000"></span>
+              </span>
+            </div>
+
             <img
               src={item.imageUrl}
               alt={item.title}
-              className="bg-gray-200 h-48 rounded-lg mb-4"
+              className="bg-gray-200 h-48 w-full rounded-lg mb-4 transition-transform duration-300 ease-in-out transform hover:scale-110"
             />
           </div>
-          <h2 className="text-xl font-semibold mb-2">{item.title}</h2>
+          <h2 className="text-xl font-bold mb-2">{item.title}</h2>
           <div className="flex items-center mb-4">
             <img
-              src="https://via.placeholder.com/40" // User avatar placeholder
-              alt="User Avatar"
+              src={item.authorImage}
+              alt={`${item.author} Avatar`}
               className="w-10 h-10 rounded-full mr-2"
             />
-            <p className="text-gray-600">{item.author}</p>
+            <p className="text-black font-semibold">{item.author}</p>
           </div>
           <div className="flex items-center mb-2">
             <span className="text-yellow-500 mr-1">★</span>

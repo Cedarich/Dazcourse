@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth; /* Enables smooth scrolling */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
 /* For Login button */
 
 @keyframes bounce {
@@ -82,4 +92,77 @@
 
 .animate-logo {
   animation: logoEnter 0.5s ease-out forwards; /* Adjust duration and easing */
+}
+
+/* BestSellingCards */
+@keyframes slideDown {
+  0% {
+    transform: translateY(-20px); /* Start from above */
+    opacity: 1; /* Keep opacity constant */
+  }
+  100% {
+    transform: translateY(0); /* End at original position */
+    opacity: 1; /* Keep opacity constant */
+  }
+}
+
+.animate-slideDown {
+  animation: slideDown 1s ease-in-out forwards; /* Increased duration to 1 second */
+}
+
+/* badge */
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.5),
+    rgba(255, 255, 255, 0.2)
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite linear; /* Slower shimmer effect */
+  filter: blur(10px);
+  z-index: 0;
+}
+
+.animate-gradient {
+  background: linear-gradient(90deg, #7a56d7, #c1b2e8);
+  background-size: 200% 100%;
+  animation: gradient 5s ease infinite; /* Slower gradient effect */
+}
+
+.bounce-animation {
+  animation: bounce 1s infinite; /* 1 second bounce effect */
+}
+
+.group:hover .bounce-animation {
+  animation: none; /* Stop bouncing on card hover */
 }
