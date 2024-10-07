@@ -79,7 +79,7 @@ const BestSellingCard = () => {
             visible
               ? "opacity-100 translate-y-0 scale-100 animate-slideDown"
               : "opacity-0 translate-y-[-20px] scale-95"
-          } hover:shadow-2xl hover:scale-105 hover:shadow-[#7a56d7] group`}
+          } group hover:shadow-[0_0_10px_3px_rgba(122,86,215,0.6),0_0_15px_5px_rgba(186,186,201,0.4)] hover:scale-105`}
           style={{
             animationDelay: `${index * 150}ms`,
           }}

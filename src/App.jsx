@@ -13,7 +13,7 @@ const App = () => {
     <Router>
       <Routes>
         {/* Public Route */}
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
 
         {/* Protected Routes using Layout */}
         <Route

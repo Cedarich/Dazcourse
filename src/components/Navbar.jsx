@@ -4,6 +4,7 @@ import { IoMdMenu } from "react-icons/io";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
 import { HiSun, HiMoon } from "react-icons/hi";
 import { MdMessage, MdUpdate, MdPersonAdd } from "react-icons/md"; // Importing icons for notifications
+import { FaUser, FaCog, FaSignOutAlt } from "react-icons/fa"; // Import profile dropdown icons
 
 const user = {
   name: "Big Cedar",
@@ -12,15 +13,23 @@ const user = {
 };
 
 const userNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
+  {
+    name: "Your Profile",
+    href: "/learning",
+    icon: <FaUser className="h-4 w-4" />,
+  },
+  { name: "Settings", href: "/settings", icon: <FaCog className="h-4 w-4" /> },
+  {
+    name: "Sign out",
+    href: "/login",
+    icon: <FaSignOutAlt className="h-4 w-4" />,
+  },
 ];
 
 const notifications = [
   {
     id: 1,
-    message: "New message from John Doe",
+    message: "New message from Cybermaxi",
     icon: <MdMessage className="h-4 w-4" />,
   },
   {
@@ -47,13 +56,17 @@ function NotificationAndUser() {
     document.body.classList.toggle("dark", !darkMode);
   };
 
+  // Define a common hover style class
+  const hoverStyle =
+    "hover:bg-[#9b7fd8] hover:text-white transition-colors duration-200";
+
   return (
     <div className="flex items-center space-x-4 z-10">
       {/* Dark Mode Toggle Button */}
       <button
         type="button"
         onClick={toggleDarkMode}
-        className="p-1 text-gray-400 hover:text-gray-500 transition-transform transform hover:scale-110 focus:outline-none"
+        className="p-1 text-gray-400 hover:text-gray-500 transition-colors duration-200 focus:outline-none"
       >
         {darkMode ? (
           <HiSun className="h-6 w-6" />
@@ -64,7 +77,7 @@ function NotificationAndUser() {
 
       {/* Notification Bell Dropdown */}
       <Menu as="div" className="relative z-10">
-        <MenuButton className="flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 transition-transform transform hover:scale-110 focus:outline-none">
+        <MenuButton className="flex-shrink-0 rounded-full bg-white p-1 text-gray-400 border-2 border-transparent hover:border-[#7a56d7] transition-colors duration-300 focus:outline-none">
           <span className="sr-only">View notifications</span>
           <PiBellSimpleRingingLight className="h-6 w-6" />
         </MenuButton>
@@ -80,7 +93,8 @@ function NotificationAndUser() {
                     href="#"
                     className={classNames(
                       active ? "bg-[#7a56d7] text-white" : "text-gray-700",
-                      "flex items-center justify-start space-x-2 block px-4 py-2 text-sm transition-colors duration-200 hover:bg-[#9b7fd8] hover:text-white"
+                      "flex items-center justify-start space-x-2 block px-4 py-2 text-sm " +
+                        hoverStyle
                     )}
                   >
                     {notification.icon}
@@ -95,7 +109,7 @@ function NotificationAndUser() {
 
       {/* Profile dropdown */}
       <Menu as="div" className="relative z-10">
-        <MenuButton className="flex items-center space-x-2 rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-transform transform hover:scale-105">
+        <MenuButton className="flex items-center space-x-2 rounded-full bg-white border-2 border-transparent hover:border-[#7a56d7] transition-colors duration-300 focus:outline-none">
           <img
             alt="User Profile"
             src={user.imageUrl}
@@ -107,7 +121,7 @@ function NotificationAndUser() {
           </div>
         </MenuButton>
         <MenuItems
-          className="absolute right-0 z-20 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition-transform transform scale-95 opacity-0 duration-300 ease-out focus:outline-none"
+          className="absolute right-0 z-20 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition-opacity duration-300 ease-out focus:outline-none"
           as="div"
         >
           {userNavigation.map((item) => (
@@ -116,13 +130,13 @@ function NotificationAndUser() {
                 <a
                   href={item.href}
                   className={classNames(
-                    active
-                      ? "bg-[#5541D7] text-white transition-transform transform scale-105"
-                      : "text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200",
-                    "block px-4 py-2 text-sm"
+                    active ? "bg-[#7a56d7] text-white" : "text-gray-700",
+                    "flex items-center space-x-2 block px-4 py-2 text-sm " +
+                      hoverStyle
                   )}
                 >
-                  {item.name}
+                  {item.icon}
+                  <span>{item.name}</span>
                 </a>
               )}
             </MenuItem>
@@ -135,7 +149,7 @@ function NotificationAndUser() {
 
 function Navbar({ toggleSidebar }) {
   return (
-    <header className="flex justify-between items-center px-4 py-3 bg-white border-b shadow-md sticky top-0 z-30 hover:shadow-glow transition-all duration-300">
+    <header className="flex justify-between items-center px-4 py-3 bg-white border-b shadow-md sticky top-0 z-30">
       <div className="flex items-center space-x-4">
         <button
           onClick={toggleSidebar}

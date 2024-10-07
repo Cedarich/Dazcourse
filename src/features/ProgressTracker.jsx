@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { FaChevronDown } from "react-icons/fa"; // Stylish icon for dropdown arrow
 
 const ProgressTracker = () => {
   const progressData = [
@@ -21,6 +22,8 @@ const ProgressTracker = () => {
   const [progressAnimation, setProgressAnimation] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [hoveredDay, setHoveredDay] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState("October");
+  const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -30,15 +33,48 @@ const ProgressTracker = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const handleMonthChange = (month) => {
+    setSelectedMonth(month);
+    setShowDropdown(false); // Close dropdown after selection
+  };
+
   return (
     <div className="max-w-sm p-4 rounded-md bg-gradient-to-r from-white via-[#f8f9fc] to-[#eef2f5] animate-slide-in-right relative overflow-hidden">
       <div className="flex justify-between items-center mb-2 border-b-2 border-gray-200 py-2 mx-auto">
-        <h2 className="text-[16px] font-bold">My Progress</h2>
-        <span
-          className={`text-[16px] font-semibold text-[#91919b] cursor-not-allowed`} // Disabled cursor
-        >
-          October &#x276F;
-        </span>
+        <h2 className="text-[16px] font-bold transition-transform duration-300 hover:scale-105">
+          My Progress
+        </h2>
+        <div className="relative group">
+          <span
+            className={`text-[16px] font-semibold text-[#91919b] cursor-pointer hover:animate-pulse hover:text-[#7a56d7] transition-colors duration-300 transform ${
+              showDropdown ? "scale-105" : ""
+            }`}
+            onClick={() => setShowDropdown((prev) => !prev)} // Toggle dropdown on click
+          >
+            {selectedMonth} <FaChevronDown className="inline-block" />
+          </span>
+          {/* Dropdown for selecting month */}
+          {showDropdown && (
+            <div className="absolute bg-white border rounded-md shadow-lg transition-all duration-200 mt-1 z-10">
+              <ul className="py-1">
+                {["October", "November", "December", "January"].map((month) => (
+                  <li
+                    key={month}
+                    className="hover:bg-[#9b7fd8] transition-colors duration-200"
+                  >
+                    <a
+                      href="#"
+                      onClick={() => handleMonthChange(month)}
+                      className="block px-4 py-2 text-gray-700 text-sm hover:text-white transition-colors duration-200" // Change text color to white on hover
+                    >
+                      {month}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Grid for days of the week */}
@@ -49,9 +85,7 @@ const ProgressTracker = () => {
             onMouseEnter={() => setHoveredDay(index)}
             onMouseLeave={() => setHoveredDay(null)}
             className={`text-sm text-[#babac9] font-semibold text-[14px] transition-transform duration-300 ease-in-out transform ${
-              hoveredDay === index
-                ? "scale-110 shadow-lg shadow-gray-500" // Gray glow
-                : ""
+              hoveredDay === index ? "scale-110 shadow-lg shadow-gray-500" : ""
             }`}
             style={{
               boxShadow:

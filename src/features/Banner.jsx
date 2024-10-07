@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import image1 from "../assests/images/Image1.jpg";
 import image2 from "../assests/images/Image2.jpg";
 import image3 from "../assests/images/Image3.jpg";
@@ -10,6 +11,7 @@ const Banner = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [isFading, setIsFading] = useState(false); // To trigger fade animation
   const [currentColor, setCurrentColor] = useState(colors[currentImage]); // To store current text color
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -23,6 +25,11 @@ const Banner = () => {
 
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, [images.length, currentImage, colors]);
+
+  // Function to handle the Explore Now button click
+  const handleExploreClick = () => {
+    navigate("/explore"); // Navigate to the /explore route
+  };
 
   return (
     <div className="relative overflow-hidden shadow-md">
@@ -56,7 +63,8 @@ const Banner = () => {
           Build your learning routine in DazCourse. Find your best course here!
         </p>
         <span
-          className={`inline-block bg-gradient-to-r from-[#5933d2] to-[#7A4DD2] text-white font-bold py-2 px-4 rounded-[8px] shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-110 hover:shadow-2xl hover:opacity-90 focus:outline-none focus:ring-4 focus:ring-[#5933d2]`}
+          onClick={handleExploreClick} // Add onClick handler
+          className={`inline-block bg-gradient-to-r from-[#5933d2] to-[#7A4DD2] text-white font-bold py-2 px-4 rounded-[8px] shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-110 hover:shadow-2xl hover:opacity-90 focus:outline-none focus:ring-4 focus:ring-[#5933d2] cursor-pointer`} // Add cursor-pointer
         >
           Explore Now
         </span>
