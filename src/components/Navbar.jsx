@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { PiBellSimpleRingingLight } from "react-icons/pi";
+import { useNavigate } from "react-router-dom";
 import { IoMdMenu } from "react-icons/io";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
-import { HiSun, HiMoon } from "react-icons/hi";
-import { MdMessage, MdUpdate, MdPersonAdd } from "react-icons/md"; // Importing icons for notifications
-import { FaUser, FaCog, FaSignOutAlt } from "react-icons/fa"; // Import profile dropdown icons
+import { MdMessage, MdUpdate, MdPersonAdd } from "react-icons/md";
+import { FaUser, FaCog, FaSignOutAlt, FaHeart } from "react-icons/fa";
+import { BsBellFill } from "react-icons/bs";
 
 const user = {
   name: "Big Cedar",
@@ -19,17 +19,13 @@ const userNavigation = [
     icon: <FaUser className="h-4 w-4" />,
   },
   { name: "Settings", href: "/settings", icon: <FaCog className="h-4 w-4" /> },
-  {
-    name: "Sign out",
-    href: "/login",
-    icon: <FaSignOutAlt className="h-4 w-4" />,
-  },
+  { name: "Sign out", icon: <FaSignOutAlt className="h-4 w-4" /> },
 ];
 
 const notifications = [
   {
     id: 1,
-    message: "New message from Cybermaxi",
+    message: "New message from Cyber",
     icon: <MdMessage className="h-4 w-4" />,
   },
   {
@@ -49,37 +45,60 @@ function classNames(...classes) {
 }
 
 function NotificationAndUser() {
-  const [darkMode, setDarkMode] = useState(false);
+  const navigate = useNavigate();
+  const [isLiked, setIsLiked] = useState(false);
+  const [isBellClicked, setIsBellClicked] = useState(false);
 
-  const toggleDarkMode = () => {
-    setDarkMode((prev) => !prev);
-    document.body.classList.toggle("dark", !darkMode);
+  const toggleLike = () => {
+    setIsLiked(!isLiked);
   };
 
-  // Define a common hover style class
+  const toggleBell = () => {
+    setIsBellClicked(!isBellClicked);
+  };
+
+  const handleSignOut = () => {
+    const confirmSignOut = window.confirm("Are you sure you want to sign out?");
+    if (confirmSignOut) {
+      localStorage.removeItem("userData");
+      navigate("/");
+    }
+  };
+
+  const handleNavigation = (href) => {
+    if (href) {
+      navigate(href);
+    }
+  };
+
   const hoverStyle =
     "hover:bg-[#9b7fd8] hover:text-white transition-colors duration-200";
 
   return (
     <div className="flex items-center space-x-4 z-10">
-      {/* Dark Mode Toggle Button */}
       <button
         type="button"
-        onClick={toggleDarkMode}
+        onClick={toggleLike}
         className="p-1 text-gray-400 hover:text-gray-500 transition-colors duration-200 focus:outline-none"
       >
-        {darkMode ? (
-          <HiSun className="h-6 w-6" />
-        ) : (
-          <HiMoon className="h-6 w-6" />
-        )}
+        <FaHeart
+          className={`text-2xl transition-all duration-300 transform ${
+            isLiked ? "text-red-500 scale-110" : "text-gray-400"
+          }`}
+        />
       </button>
 
-      {/* Notification Bell Dropdown */}
       <Menu as="div" className="relative z-10">
-        <MenuButton className="flex-shrink-0 rounded-full bg-white p-1 text-gray-400 border-2 border-transparent hover:border-[#7a56d7] transition-colors duration-300 focus:outline-none">
+        <MenuButton
+          onClick={toggleBell}
+          className={`flex-shrink-0 rounded-full bg-white p-1 transition-colors duration-300 focus:outline-none`}
+        >
           <span className="sr-only">View notifications</span>
-          <PiBellSimpleRingingLight className="h-6 w-6" />
+          <BsBellFill
+            className={`h-6 w-6 ${
+              isBellClicked ? "text-[#9b7fd8]" : "text-gray-400"
+            }`}
+          />
         </MenuButton>
         <MenuItems
           className="absolute left-1/2 z-20 mt-2 w-56 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transform -translate-x-1/2 focus:outline-none"
@@ -89,17 +108,17 @@ function NotificationAndUser() {
             {notifications.map((notification) => (
               <MenuItem key={notification.id}>
                 {({ active }) => (
-                  <a
-                    href="#"
+                  <button
                     className={classNames(
                       active ? "bg-[#7a56d7] text-white" : "text-gray-700",
-                      "flex items-center justify-start space-x-2 block px-4 py-2 text-sm " +
-                        hoverStyle
+                      "flex items-center justify-start space-x-2 px-4 py-2 text-sm " +
+                        hoverStyle // Removed block
                     )}
+                    onClick={() => toggleBell()} // Close dropdown on click
                   >
                     {notification.icon}
                     <span>{notification.message}</span>
-                  </a>
+                  </button>
                 )}
               </MenuItem>
             ))}
@@ -107,7 +126,6 @@ function NotificationAndUser() {
         </MenuItems>
       </Menu>
 
-      {/* Profile dropdown */}
       <Menu as="div" className="relative z-10">
         <MenuButton className="flex items-center space-x-2 rounded-full bg-white border-2 border-transparent hover:border-[#7a56d7] transition-colors duration-300 focus:outline-none">
           <img
@@ -121,23 +139,29 @@ function NotificationAndUser() {
           </div>
         </MenuButton>
         <MenuItems
-          className="absolute right-0 z-20 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition-opacity duration-300 ease-out focus:outline-none"
+          className="absolute right-0 z-20 mt-2 w-32 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition-opacity duration-300 ease-out focus:outline-none"
           as="div"
         >
           {userNavigation.map((item) => (
             <MenuItem key={item.name}>
               {({ active }) => (
-                <a
-                  href={item.href}
+                <button
                   className={classNames(
                     active ? "bg-[#7a56d7] text-white" : "text-gray-700",
-                    "flex items-center space-x-2 block px-4 py-2 text-sm " +
+                    "flex items-center gap-1 w-full px-4 py-2 text-sm " + // Set w-full to make the button take full width
                       hoverStyle
                   )}
+                  onClick={() => {
+                    if (item.name === "Sign out") {
+                      handleSignOut();
+                    } else {
+                      handleNavigation(item.href);
+                    }
+                  }}
                 >
                   {item.icon}
                   <span>{item.name}</span>
-                </a>
+                </button>
               )}
             </MenuItem>
           ))}

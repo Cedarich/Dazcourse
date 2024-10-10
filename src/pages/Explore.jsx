@@ -4,16 +4,21 @@ import OfferCards from "../features/OfferCards";
 import SearchInput from "../features/SearchInput";
 import SearchResult from "../features/SearchResult";
 import InstructorProfiled from "../components/InstructorProfiled.jsx";
-import UserExperienceDesign from "../components/UserExperienceDesign";
+import UserExperienceDesign from "../components/UserExperienceDesign"; // Import UserExperienceDesign
 import { CgArrowBottomRightR } from "react-icons/cg";
 import { FaTags } from "react-icons/fa6";
+import CustomAlert from "../components/CustomAlert";
 
 const Explore = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [cartItems, setCartItems] = useState([]); // State to manage cart items
-  const [currentView, setCurrentView] = useState("offers"); // State to manage the current view
+  const [cartItems, setCartItems] = useState([]);
+  const [currentView, setCurrentView] = useState("offers"); // State to manage current view
+  const [selectedCourseId, setSelectedCourseId] = useState(null); // State to manage selected course ID
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   const offers = [
+    // Your offers data...
     {
       id: 1,
       title: "UI/UX Design Course",
@@ -104,14 +109,27 @@ const Explore = () => {
     setSearchTerm(term);
   };
 
-  // Function to handle adding items to the cart
   const handleAddToCart = (offer) => {
-    setCartItems((prevItems) => [...prevItems, offer]);
+    setCartItems((prevItems) => {
+      const itemExists = prevItems.some((item) => item.id === offer.id);
+      if (itemExists) {
+        setAlertMessage(`${offer.title} is already in your cart!`);
+        setShowAlert(true);
+        return prevItems;
+      } else {
+        return [...prevItems, offer];
+      }
+    });
   };
 
-  // Handler to change view
-  const handleViewChange = (view) => {
-    setCurrentView(view);
+  const handleCloseAlert = () => {
+    setShowAlert(false);
+  };
+
+  // Handler for card click to manage views
+  const handleCardClick = (id) => {
+    setSelectedCourseId(id); // Set the selected course ID
+    setCurrentView("ux"); // Change the view to UserExperienceDesign
   };
 
   return (
@@ -121,66 +139,54 @@ const Explore = () => {
       </div>
 
       <div className="flex flex-wrap items-center text-center gap-4 my-4 px-2 whitespace-nowrap">
-        {/* Offers Section */}
         <div
           className="flex items-center gap-2 group cursor-pointer"
-          onClick={() => handleViewChange("offers")}
+          onClick={() => setCurrentView("offers")}
         >
           <p className="transition-transform duration-300 group-hover:translate-x-1 text-[#babac9] text-xs">
             Best Sellers
           </p>
           <FaTags className="text-[#babac9] transition-transform duration-300 group-hover:translate-x-2 group-hover:text-[#7a56d7]" />
         </div>
-
-        {/* Instructor Profile Section */}
         <div
           className="flex items-center gap-2 group cursor-pointer"
-          onClick={() => handleViewChange("instructor")}
+          onClick={() => setCurrentView("instructor")}
         >
           <p className="transition-transform duration-300 group-hover:translate-x-1 text-[#babac9] text-xs">
             Instructor Profile
           </p>
           <CgArrowBottomRightR className="text-[#babac9] font-semibold transition-transform duration-300 group-hover:translate-x-2 group-hover:text-[#7a56d7]" />
         </div>
-
-        {/* User Experience Design Section */}
-        <div
-          className="flex items-center gap-2 group cursor-pointer w-full sm:w-auto"
-          onClick={() => handleViewChange("ux")}
-        >
-          <p className="transition-transform duration-300 group-hover:translate-x-1 text-[#babac9] text-xs">
-            User Experience Design
-          </p>
-          <CgArrowBottomRightR className="text-[#babac9] font-semibold transition-transform duration-300 group-hover:translate-x-2 group-hover:text-[#7a56d7]" />
-        </div>
       </div>
 
-      {/* Render SearchInput and SearchResult only for the "offers" view */}
+      {showAlert && (
+        <CustomAlert message={alertMessage} onClose={handleCloseAlert} />
+      )}
+
+      {/* Render offers view */}
       {currentView === "offers" && (
         <>
-          <div className="py-4 mt-4 w-full">
-            <SearchInput onSearch={handleSearch} />
-          </div>
-
-          <div>
-            {/* Pass cartItems.length to SearchResult */}
-            <SearchResult cartCount={cartItems.length} />
-          </div>
-
-          <div>
-            {/* Render the OfferCards only for the "offers" view */}
-            <OfferCards
-              searchTerm={searchTerm}
-              offers={offers}
-              onAddToCart={handleAddToCart} // Pass the add to cart handler
-            />
-          </div>
+          <SearchInput onSearch={handleSearch} />
+          <SearchResult cartCount={cartItems.length} />
+          <OfferCards
+            searchTerm={searchTerm}
+            offers={offers}
+            onAddToCart={handleAddToCart}
+            onCardClick={(offer) => handleCardClick(offer.id)} // Trigger view change on card click
+          />
         </>
       )}
 
-      {/* Render components based on current view */}
+      {/* Render Instructor Profile */}
       {currentView === "instructor" && <InstructorProfiled />}
-      {currentView === "ux" && <UserExperienceDesign />}
+
+      {/* Render UserExperienceDesign */}
+      {currentView === "ux" && (
+        <UserExperienceDesign
+          courseId={selectedCourseId} // Pass the selected course ID
+          onClose={() => setCurrentView("offers")} // Provide a way to return to offers view
+        />
+      )}
     </div>
   );
 };

@@ -85,12 +85,13 @@ const InstructorProfiled = () => {
 
         {/* Instructor Name */}
         <h2
-          className={`text-2xl font-bold mb-2 text-gray-800 transition-opacity transform ${
+          className={`text-2xl font-bold mb-2 text-gray-800 transition-opacity transform text-center md:text-left ${
             isLoaded ? "opacity-100 scale-100 translate-y-0" : "opacity-0"
           } duration-700`}
         >
           Ritchey Nwadubisi
         </h2>
+
         <p
           className={`text-black text-lg mb-4 transition-opacity transform ${
             isLoaded ? "opacity-100 scale-100 translate-y-0" : "opacity-0"
@@ -121,7 +122,7 @@ const InstructorProfiled = () => {
 
         {/* Instructor Bio */}
         <p
-          className={`text-gray-700 text-base mb-6 text-center leading-relaxed transition-all ${
+          className={`text-gray-700 text-base mb-6 leading-relaxed text-justify transition-all ${
             isLoaded
               ? "opacity-100 scale-100 translate-y-0 hover:text-[#7a56d7]"
               : "opacity-0"

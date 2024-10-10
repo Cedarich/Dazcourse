@@ -239,3 +239,75 @@ body {
     0 0 20px rgba(186, 186, 201, 0.6), 0 0 25px rgba(122, 86, 215, 0.8);
   transition: box-shadow 0.3s ease-in-out;
 }
+
+/* Stars in Review */
+.star-icon {
+  transition: transform 0.3s ease;
+}
+
+.star-icon:hover {
+  transform: translateY(-5px) rotate(-10deg);
+}
+
+.image-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.image-hover:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(0, 123, 255, 0.5);
+}
+
+/* Glass features */
+
+.star-icon {
+  transition: transform 0.3s ease;
+}
+
+.star-icon:hover {
+  transform: translateY(-5px) rotate(-10deg);
+}
+
+.image-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.image-hover:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(0, 123, 255, 0.5);
+}
+
+/* Users Experience */
+
+@keyframes softGlow {
+  0% {
+    box-shadow: 0 0 10px rgba(155, 127, 216, 0.2); /* Starting softer glow */
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(155, 127, 216, 0.5); /* Slightly brighter glow */
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(155, 127, 216, 0.2); /* Return to starting softer glow */
+  }
+}
+
+.glow-effect {
+  animation: softGlow 2s infinite alternate; /* Adjust duration for visibility */
+}
+
+/* student review */
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-in forwards;
+}

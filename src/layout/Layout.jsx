@@ -14,10 +14,10 @@ const Layout = () => {
     <div className="flex flex-col font-inter h-full md:h-screen">
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
-      <div className="flex flex-col flex-1 ml-0 lg:ml-52">
+      <div className="flex flex-col flex-1 ml-0 lg:ml-52 transition-all duration-300 ease-in-out">
         <Navbar toggleSidebar={toggleSidebar} />
 
-        <main className="flex-1 overflow-x-hidden overflow-y-auto">
+        <main className="flex-1 overflow-x-hidden overflow-y-auto p-4 bg-white dark:bg-gray-800 transition-colors duration-300 ease-in-out">
           <Outlet />
         </main>
       </div>

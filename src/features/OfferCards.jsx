@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AddButton from "./AddButton";
 
-const OfferCards = ({ searchTerm, offers, onAddToCart }) => {
+const OfferCards = ({ searchTerm, offers, onAddToCart, onCardClick }) => {
   const [showCards, setShowCards] = useState(false);
 
   // Make sure searchTerm is a valid string to avoid errors
@@ -28,7 +28,7 @@ const OfferCards = ({ searchTerm, offers, onAddToCart }) => {
       {filteredOffers.map((item, index) => (
         <div
           key={item.id}
-          className={`max-w-sm rounded-lg shadow-lg bg-white p-6 transition-transform duration-700 ease-out transform ${
+          className={`max-w-sm rounded-lg shadow-lg bg-white p-6 transition-transform duration-700 ease-out transform cursor-pointer ${
             showCards
               ? `translate-y-0 scale-100 animate-popIn`
               : `translate-y-[-20px] scale-95`
@@ -36,13 +36,12 @@ const OfferCards = ({ searchTerm, offers, onAddToCart }) => {
           style={{
             animationDelay: `${index * 150}ms`,
           }}
+          onClick={() => onCardClick(item)} // Handle card click
         >
           <div className="relative mb-4">
             <div className="relative">
-              <span className="absolute top-0 right-0 bg-[#dbd7f4] text-[#7a56d7] text-xs font-bold uppercase px-2 py-1 rounded-br-lg z-10 shadow-lg cursor-pointer transition-transform transform duration-300 bounce-animation group-hover:animate-none">
-                <span className="relative z-10">BEST SELLERS</span>
-                <span className="absolute inset-0 rounded-br-lg bg-gradient-to-r from-[#7a56d7] to-[#c1b2e8] opacity-25 animate-gradient transition duration-500"></span>
-                <span className="absolute inset-0 rounded-br-lg opacity-30 blur-md animate-shimmer transition duration-1000"></span>
+              <span className="absolute top-0 right-0 bg-[#dbd7f4] text-[#7a56d7] text-xs font-bold uppercase px-2 py-1 rounded-br-lg z-10 shadow-lg transition-transform transform duration-300 bounce-animation">
+                BEST SELLERS
               </span>
             </div>
 
@@ -77,7 +76,12 @@ const OfferCards = ({ searchTerm, offers, onAddToCart }) => {
               </span>
             </span>
             {/* Pass the onAddToCart function to AddButton */}
-            <AddButton onClick={() => onAddToCart(item)} />
+            <AddButton
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent click from bubbling up to card
+                onAddToCart(item);
+              }}
+            />
           </div>
         </div>
       ))}
