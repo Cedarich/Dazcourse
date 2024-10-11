@@ -3,7 +3,7 @@ import { FaShoppingCart } from "react-icons/fa";
 
 const SearchResult = ({ cartCount }) => {
   return (
-    <div className="flex justify-between items-center mx-auto py-4 px-4">
+    <div className="flex justify-between items-center mx-auto py-4 px-2">
       <h4 className="text-[24px] font-bold transition-transform duration-300 transform hover:scale-105">
         Your result
       </h4>

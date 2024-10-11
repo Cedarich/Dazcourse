@@ -107,7 +107,7 @@ const MyLearning = () => {
 
   return (
     <div
-      className={`bg-[#f4f4f9] p-4 scroll-smooth transition-all duration-1000 ease-in-out ${
+      className={`bg-[#f4f4f9] scroll-smooth transition-all duration-1000 ease-in-out ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >
@@ -117,9 +117,9 @@ const MyLearning = () => {
           onBack={() => setSelectedCourse(null)}
         />
       ) : (
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between space-y-4 md:space-y-0 h-full transition-all duration-700 ease-in-out">
+        <div className="max-w-6xl  flex flex-col md:flex-row justify-between space-y-4 md:space-y-0 h-full transition-all duration-700 ease-in-out">
           {/* Left: Tabs + Course Cards Section */}
-          <div className="flex-1 flex flex-col basis-2/3 space-y-4 p-2">
+          <div className="flex-1 flex flex-col basis-2/3 space-y-4 px-2">
             <h4 className="text-[24px] font-bold transition-transform duration-300 transform ">
               My Learning
             </h4>
@@ -181,7 +181,7 @@ const MyLearning = () => {
               isVisible ? "translate-x-0" : "translate-x-10 opacity-0"
             }`}
           >
-            <div className="rounded-lg p-4 h-full w-full transition-all duration-500 ease-in-out">
+            <div className="rounded-lg mt-10 sm:mt-24 py-1 h-full w-full transition-all duration-500 ease-in-out">
               <ProgressTracker />
             </div>
           </div>

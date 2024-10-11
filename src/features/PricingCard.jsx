@@ -59,7 +59,7 @@ const PricingCard = () => {
 
       <div>
         {/* Pricing and original price */}
-        <div className="flex gap-4 items-center mb-4 border-b py-1">
+        <div className="flex gap-4 items-center mb-4 border-b py-2 px-4">
           <h2 className="text-3xl font-bold text-[#3fafba]">₦2000</h2>
           <span className="text-gray-500 line-through">₦3500</span>
         </div>

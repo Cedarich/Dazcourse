@@ -61,7 +61,7 @@ const CourseCard = ({ course, onResume, className }) => {
 
   return (
     <div
-      className={`flex flex-col md:flex-row justify-between items-center bg-white shadow-lg rounded-lg p-4 mb-4 relative overflow-hidden transition-transform duration-500 ease-out transform hover:scale-105 hover:shadow-xl ${className}`}
+      className={`flex flex-col md:flex-row justify-between items-center bg-white shadow-lg rounded-lg p-3 mb-4 relative overflow-hidden transition-transform duration-500 ease-out transform hover:scale-105 hover:shadow-xl ${className}`}
     >
       {/* Shining effect div */}
       <div className="shine absolute top-0 left-0 right-0 bottom-0 z-0"></div>

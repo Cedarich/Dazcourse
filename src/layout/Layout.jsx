@@ -11,13 +11,17 @@ const Layout = () => {
   };
 
   return (
-    <div className="flex flex-col font-inter h-full md:h-screen">
+    <div className="flex flex-col font-mullish min-h-screen">
+      {" "}
+      {/* Changed h-full to min-h-screen */}
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-
-      <div className="flex flex-col flex-1 ml-0 lg:ml-52 transition-all duration-300 ease-in-out">
+      <div className="flex flex-col flex-1 ml-0 lg:ml-52 transition-all duration-300 ease-in-out ">
+        {" "}
+        {/* Fixed background color syntax */}
         <Navbar toggleSidebar={toggleSidebar} />
-
-        <main className="flex-1 overflow-x-hidden overflow-y-auto p-4 bg-white dark:bg-gray-800 transition-colors duration-300 ease-in-out">
+        <main className="flex-1 overflow-x-hidden overflow-y-auto p-4 bg-[#f4f4f9] rounded-md shadow-md">
+          {" "}
+          {/* Added white background and styles */}
           <Outlet />
         </main>
       </div>

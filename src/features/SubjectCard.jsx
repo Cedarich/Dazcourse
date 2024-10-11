@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaStar, FaShareAlt, FaHeart } from "react-icons/fa";
 import {
   AiOutlineClockCircle,
@@ -6,13 +6,23 @@ import {
   AiOutlineUser,
 } from "react-icons/ai";
 import { motion } from "framer-motion";
+import "../ui/Styles.css"; // Ensure correct path
 
 const SubjectCard = () => {
   const [isLiked, setIsLiked] = useState(false);
+  const [triggerGlitter, setTriggerGlitter] = useState(false);
 
   const handleHeartClick = () => {
     setIsLiked((prev) => !prev);
+    setTriggerGlitter(true); // Trigger glitter effect
   };
+
+  useEffect(() => {
+    if (triggerGlitter) {
+      const timeout = setTimeout(() => setTriggerGlitter(false), 600); // Reset glitter effect after animation
+      return () => clearTimeout(timeout);
+    }
+  }, [triggerGlitter]);
 
   return (
     <motion.div
@@ -40,11 +50,14 @@ const SubjectCard = () => {
             </h1>
           </div>
           <div className="flex items-center gap-4 px-2">
-            <button onClick={handleHeartClick} className="focus:outline-none">
+            <button
+              onClick={handleHeartClick}
+              className="focus:outline-none relative"
+            >
               <FaHeart
                 className={`text-2xl transition-all duration-300 transform ${
                   isLiked ? "text-red-500 scale-110" : "text-gray-400"
-                }`}
+                } ${triggerGlitter ? "glitter-effect" : ""}`} // Add glitter-effect class on click
               />
             </button>
             <button className="text-[#9b7fd8] hover:text-[#7146d2] focus:outline-none">
@@ -67,7 +80,7 @@ const SubjectCard = () => {
           </span>
         </div>
 
-        <div className="flex flex-col md:flex-row  mx-auto px-1 py-2 gap-4">
+        <div className="flex flex-col md:flex-row mx-auto px-1 py-2 gap-4">
           <motion.span
             className="flex items-center"
             whileHover={{ scale: 1.1 }}

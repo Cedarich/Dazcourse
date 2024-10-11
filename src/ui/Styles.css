@@ -1,0 +1,84 @@
+.glitter-effect {
+  animation: glitter 0.6s ease-in-out forwards;
+}
+
+.glitter-sparkles {
+  position: relative;
+  display: inline-block; /* Ensures the sparkles position relative to the heart */
+}
+
+.sparkle {
+  position: absolute;
+  width: 8px; /* Slightly larger width */
+  height: 8px; /* Slightly larger height */
+  background: #9b7fd8;
+  border-radius: 50%;
+  opacity: 0;
+  animation: sparkle-animation 0.6s forwards;
+}
+
+.sparkle:nth-child(1) {
+  top: 0;
+  left: 10%;
+  animation-delay: 0.1s;
+}
+.sparkle:nth-child(2) {
+  top: 0;
+  left: 20%;
+  animation-delay: 0.2s;
+}
+.sparkle:nth-child(3) {
+  top: 0;
+  left: 30%;
+  animation-delay: 0.3s;
+}
+.sparkle:nth-child(4) {
+  top: 0;
+  left: 40%;
+  animation-delay: 0.4s;
+}
+.sparkle:nth-child(5) {
+  top: 0;
+  left: 50%;
+  animation-delay: 0.5s;
+}
+.sparkle:nth-child(6) {
+  top: 0;
+  left: 60%;
+  animation-delay: 0.6s;
+}
+.sparkle:nth-child(7) {
+  top: 0;
+  left: 70%;
+  animation-delay: 0.7s;
+}
+.sparkle:nth-child(8) {
+  top: 0;
+  left: 80%;
+  animation-delay: 0.8s;
+}
+.sparkle:nth-child(9) {
+  top: 0;
+  left: 90%;
+  animation-delay: 0.9s;
+}
+.sparkle:nth-child(10) {
+  top: 0;
+  left: 100%;
+  animation-delay: 1s;
+}
+
+@keyframes sparkle-animation {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50px, -50px) scale(1.5); /* Wider movement */
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-100px, -100px) scale(0.5); /* Wider movement */
+  }
+}

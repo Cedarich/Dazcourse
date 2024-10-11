@@ -55,7 +55,7 @@ const StudentReview = () => {
   }, []); // No dependencies since ratingsData is static
 
   return (
-    <div className="max-w-[740px] rounded-lg p-6 mt-4 px-4">
+    <div className="max-w-[740px] rounded-lg p-2 mt-4 px-2">
       <h2 className="text-2xl font-bold mb-4">Student Reviews</h2>
 
       {/* Responsive Rating Section */}
@@ -99,7 +99,7 @@ const StudentReview = () => {
       {reviews.map((review, index) => (
         <div
           key={index}
-          className="border-t pt-4 mt-4 flex flex-col sm:flex-row items-start transition-transform transform hover:scale-105 hover: p-2 duration-300 ease-in-out"
+          className="border-t pt-2 px-2 mt-4 flex flex-col sm:flex-row items-start transition-transform transform hover:scale-105 hover: p-2 duration-300 ease-in-out"
         >
           <img
             src={review.imageUrl}

@@ -133,12 +133,13 @@ const Explore = () => {
   };
 
   return (
-    <div className="bg-[#f4f4f9] p-4 scroll-smooth modern-entrance">
-      <div className="mx-auto px-2">
-        <Banner />
+    <div className="bg-[#f4f4f9]  scroll-smooth modern-entrance">
+      <div className="mx-auto ">
+        {currentView === "offers" && <Banner />}{" "}
+        {/* Hide Banner when not in 'offers' view */}
       </div>
 
-      <div className="flex flex-wrap items-center text-center gap-4 my-4 px-2 whitespace-nowrap">
+      <div className="flex flex-wrap items-center text-center gap-4 my-2 px-2 whitespace-nowrap">
         <div
           className="flex items-center gap-2 group cursor-pointer"
           onClick={() => setCurrentView("offers")}

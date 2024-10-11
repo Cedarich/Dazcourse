@@ -2,8 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+body,
 html {
   scroll-behavior: smooth; /* Enables smooth scrolling */
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -311,3 +314,5 @@ body {
 .animate-fadeIn {
   animation: fadeIn 0.5s ease-in forwards;
 }
+
+/* Glittering */

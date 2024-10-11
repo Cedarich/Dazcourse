@@ -22,7 +22,7 @@ const LearningsCard = () => {
 
   return (
     <motion.div
-      className="w-full max-w-[736px] h-auto bg-white rounded-lg shadow-lg p-6 sm:w-[90%] md:w-[80%] lg:w-[736px]"
+      className="w-full max-w-[736px] h-auto bg-white rounded-lg shadow-lg  sm:w-[90%] md:w-[80%] lg:w-[736px]"
       whileHover={{ scale: 1.03 }} // Apply hover scale here
       transition={{ duration: 0.3 }} // Transition effect for scaling
     >
@@ -132,7 +132,7 @@ const LearningsCard = () => {
         </AnimatePresence>
         <motion.button
           onClick={handleToggle}
-          className="mt-4 text-[#9b7fd8] font-semibold py-2 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:bg-[#9b7fd8] hover:text-white hover:scale-105 focus:outline-none  focus:ring-[#7a56d7] focus:ring-opacity-50"
+          className="mt-4 text-[#9b7fd8] font-semibold py-2 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:bg-[#9b7fd8] hover:text-white hover:scale-105 focus:outline-none  focus:ring-[#7a56d7] focus:ring-opacity-50"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >

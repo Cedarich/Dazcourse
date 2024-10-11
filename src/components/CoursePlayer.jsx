@@ -38,13 +38,13 @@ const CoursePlayer = ({ course, onBack }) => {
 
   return (
     <motion.div
-      className="container mx-auto p-4 bg-[#f4f4f9]"
+      className="container  bg-[#f4f4f9]"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
       exit="hidden"
     >
-      <div className="max-w-6xl px-2 py-2 flex flex-col min-h-screen transition-transform duration-700 ease-in-out opacity-100 transform translate-y-0">
+      <div className="max-w-6xl  flex flex-col min-h-screen transition-transform duration-700 ease-in-out opacity-100 transform translate-y-0">
         {/* Section with Video Player and ContentCourse */}
         <motion.div
           className="flex flex-col md:flex-row w-full gap-4"
@@ -52,12 +52,12 @@ const CoursePlayer = ({ course, onBack }) => {
         >
           {/* Left section with Video Player */}
           <div className="flex-grow flex justify-center items-stretch">
-            <div className="w-full max-w-[736px] h-[400px] mt-6">
+            <div className="w-full max-w-[736px] h-[400px] py-2 ">
               {/* Video Player */}
-              <div className="relative w-full h-full bg-[#f4f4f9] rounded-lg shadow-[0_0_15px_rgba(124,58,237,0.4)] transition-transform hover:shadow-[0_0_30px_rgba(124,58,237,0.7)] duration-200">
+              <div className="relative  w-full h-full bg-[#f4f4f9] rounded-lg  transition-transform hover:shadow-[0_0_30px_rgba(124,58,237,0.7)] duration-200">
                 {/* YouTube Video Embed with Autoplay */}
                 <iframe
-                  className="w-full h-full rounded-lg"
+                  className="w-full h-full rounded-lg "
                   src={`${course.videoUrl}?autoplay=1`} // Enable autoplay
                   title="YouTube video player"
                   frameBorder="0"
@@ -68,7 +68,7 @@ const CoursePlayer = ({ course, onBack }) => {
                 {/* Back Button */}
                 <motion.button
                   onClick={onBack}
-                  className="absolute top-2 left-2 flex items-center justify-center w-10 h-10 bg-gradient-to-r from-[#9b7fd8] to-[#7A4DD2] text-white rounded-full shadow-md transition-all duration-300 ease-in-out"
+                  className="absolute top-2 left-2 flex items-center justify-center w-8 h-8 bg-gradient-to-r from-[#9b7fd8] to-[#7A4DD2] text-white rounded-full shadow-md transition-all duration-300 ease-in-out"
                   whileHover={{ scale: 1.1, rotate: 180 }} // Add rotate here
                   whileTap={{ scale: 0.9 }}
                 >
@@ -80,18 +80,17 @@ const CoursePlayer = ({ course, onBack }) => {
 
           {/* Right section with ContentCourse */}
           <div className="w-full md:w-[300px] flex justify-center items-stretch">
-            <div className="w-full h-full mt-2">
+            <div className="w-full h-full  ">
               <ContentCourse course={course} />
             </div>
           </div>
         </motion.div>
 
-        {/* Course Overview Section directly under Video Player */}
         <motion.div
-          className="w-full max-w-[730px] mt-2"
+          className="w-full max-w-[730px] "
           variants={containerVariants}
         >
-          <h1 className="text-4xl font-bold text-black mb-4">
+          <h1 className="text-4xl font-bold text-black mb-4 mt-2">
             E-Commerce Mobile App Design Using Figma
           </h1>
 
@@ -142,7 +141,7 @@ const CoursePlayer = ({ course, onBack }) => {
 
             <motion.button
               onClick={handleToggle}
-              className="mt-4 text-[#9b7fd8] font-semibold py-2 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover:bg-[#9b7fd8] hover:text-white hover:scale-105 focus:outline-none focus:ring-[#7a56d7] focus:ring-opacity-50"
+              className="mt-4 text-[#9b7fd8] font-semibold py-2 px-2 rounded-lg transition-all duration-300 ease-in-out transform hover:bg-[#9b7fd8] hover:text-white hover:scale-105 focus:outline-none focus:ring-[#7a56d7] focus:ring-opacity-50"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >

@@ -37,12 +37,12 @@ const UserExperienceDesign = ({ courseId, onClose }) => {
 
   return (
     <motion.div
-      className="container mx-auto p-4"
+      className="container p-2"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
-      <div className="max-w-6xl px-2 py-2 flex flex-col min-h-screen transition-transform duration-700 ease-in-out opacity-100 transform translate-y-0">
+      <div className="max-w-6xl   py-2 flex flex-col min-h-screen transition-transform duration-700 ease-in-out opacity-100 transform translate-y-0">
         {/* Section with SubjectCard and PricingCard side by side */}
         <div className="flex flex-col md:flex-row w-full gap-4 relative">
           {/* Left section with SubjectCard */}
@@ -59,7 +59,7 @@ const UserExperienceDesign = ({ courseId, onClose }) => {
             {/* Animated Back Button positioned on top of the SubjectCard */}
             <motion.button
               onClick={onClose}
-              className="absolute top-2 left-2 flex items-center justify-center w-10 h-10 bg-gradient-to-r from-[#9b7fd8] to-[#7A4DD2] text-white rounded-full shadow-md transition-all duration-300 ease-in-out z-10"
+              className="absolute top-2 left-2 flex items-center justify-center w-8 h-8 bg-gradient-to-r from-[#9b7fd8] to-[#7A4DD2] text-white rounded-full shadow-md transition-all duration-300 ease-in-out z-10"
               whileHover={{ scale: 1.1, rotate: 180 }} // Add rotate effect on hover
               whileTap={{ scale: 0.9 }} // Scale down effect on tap
             >
@@ -73,7 +73,7 @@ const UserExperienceDesign = ({ courseId, onClose }) => {
             initial="hidden"
             animate="visible"
           >
-            <div className="w-full max-w-screen-lg h-full">
+            <div className="w-full max-w-screen-lg h-full px-2">
               <PricingCard courseId={courseId} />{" "}
               {/* Pass courseId to PricingCard */}
             </div>

@@ -65,9 +65,9 @@ const InstructorProfiled = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto">
       <div
-        className={`flex flex-col items-center bg-white rounded-lg shadow-lg p-6 transition-all duration-700 ease-in-out transform ${
+        className={`flex flex-col items-center bg-white rounded-lg shadow-lg p-4 transition-all duration-700 ease-in-out transform ${
           isLoaded
             ? "opacity-100 scale-100 translate-y-0"
             : "opacity-0 scale-90 translate-y-10"
@@ -173,7 +173,7 @@ const InstructorProfiled = () => {
           {showSocials ? "Show Less" : "Show More"}
         </button>
       </div>
-      <div className="mt-2">
+      <div className="">
         <Topheader />
       </div>
 

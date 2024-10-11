@@ -22,8 +22,9 @@ const ContentCourse = () => {
   };
 
   return (
-    <div className="max-w-[736px] bg-white rounded-lg shadow-lg p-4 mt-4 w-full border border-gray-300 transition-transform duration-300 hover:scale-105">
+    <div className="max-w-[736px] bg-white rounded-lg shadow-lg p-2 mt-4 w-full border border-gray-300 transition-transform duration-300 hover:scale-105">
       {/* Card now has a scale effect on hover */}
+
       <h2 className="text-2xl font-bold mb-6">Content Course</h2>
 
       {/* Color Theory Section */}

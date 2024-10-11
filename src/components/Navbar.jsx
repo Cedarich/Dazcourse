@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { IoMdMenu } from "react-icons/io";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
 import { MdMessage, MdUpdate, MdPersonAdd } from "react-icons/md";
 import { FaUser, FaCog, FaSignOutAlt, FaHeart } from "react-icons/fa";
 import { BsBellFill } from "react-icons/bs";
+import "../ui/Styles.css"; // Ensure correct path
+import LogoutModal from "../components/LogoutModal"; // Import your LogoutModal
 
 const user = {
-  name: "Big Cedar",
+  name: "Godwin Ekoh",
   email: "godwinekoh@gmail.com",
   imageUrl: require("../assests/images/newprof.jpg"),
 };
@@ -48,21 +51,37 @@ function NotificationAndUser() {
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
   const [isBellClicked, setIsBellClicked] = useState(false);
+  const [triggerGlitter, setTriggerGlitter] = useState(false);
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false); // State for LogoutModal
 
   const toggleLike = () => {
     setIsLiked(!isLiked);
+    setTriggerGlitter(true); // Trigger glitter effect
   };
+
+  useEffect(() => {
+    if (triggerGlitter) {
+      const timeout = setTimeout(() => setTriggerGlitter(false), 600); // Clear glitter effect after animation duration
+      return () => clearTimeout(timeout);
+    }
+  }, [triggerGlitter]);
 
   const toggleBell = () => {
     setIsBellClicked(!isBellClicked);
   };
 
   const handleSignOut = () => {
-    const confirmSignOut = window.confirm("Are you sure you want to sign out?");
-    if (confirmSignOut) {
-      localStorage.removeItem("userData");
-      navigate("/");
-    }
+    setLogoutModalOpen(true); // Show the LogoutModal
+  };
+
+  const handleLogoutConfirm = () => {
+    localStorage.removeItem("userData");
+    navigate("/");
+    setLogoutModalOpen(false);
+  };
+
+  const handleLogoutCancel = () => {
+    setLogoutModalOpen(false); // Close the modal without logging out
   };
 
   const handleNavigation = (href) => {
@@ -79,13 +98,20 @@ function NotificationAndUser() {
       <button
         type="button"
         onClick={toggleLike}
-        className="p-1 text-gray-400 hover:text-gray-500 transition-colors duration-200 focus:outline-none"
+        className="p-1 relative text-gray-400 hover:text-gray-500 transition-colors duration-200 focus:outline-none"
       >
-        <FaHeart
-          className={`text-2xl transition-all duration-300 transform ${
-            isLiked ? "text-red-500 scale-110" : "text-gray-400"
-          }`}
-        />
+        <div className="glitter-sparkles">
+          <FaHeart
+            className={`text-2xl transition-all duration-300 transform relative ${
+              isLiked ? "text-red-500 scale-110" : "text-gray-400"
+            }`}
+          />
+          {/* Sparkle elements will be rendered here */}
+          {triggerGlitter &&
+            [...Array(15)].map((_, index) => (
+              <span key={index} className="sparkle"></span>
+            ))}
+        </div>
       </button>
 
       <Menu as="div" className="relative z-10">
@@ -100,10 +126,7 @@ function NotificationAndUser() {
             }`}
           />
         </MenuButton>
-        <MenuItems
-          className="absolute left-1/2 z-20 mt-2 w-56 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transform -translate-x-1/2 focus:outline-none"
-          as="div"
-        >
+        <MenuItems className="absolute left-1/2 z-20 mt-2 w-56 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transform -translate-x-1/2 focus:outline-none">
           <div className="py-1">
             {notifications.map((notification) => (
               <MenuItem key={notification.id}>
@@ -112,9 +135,9 @@ function NotificationAndUser() {
                     className={classNames(
                       active ? "bg-[#7a56d7] text-white" : "text-gray-700",
                       "flex items-center justify-start space-x-2 px-4 py-2 text-sm " +
-                        hoverStyle // Removed block
+                        hoverStyle
                     )}
-                    onClick={() => toggleBell()} // Close dropdown on click
+                    onClick={() => toggleBell()}
                   >
                     {notification.icon}
                     <span>{notification.message}</span>
@@ -138,22 +161,19 @@ function NotificationAndUser() {
             <p className="text-xs text-gray-500">{user.email}</p>
           </div>
         </MenuButton>
-        <MenuItems
-          className="absolute right-0 z-20 mt-2 w-32 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition-opacity duration-300 ease-out focus:outline-none"
-          as="div"
-        >
+        <MenuItems className="absolute right-0 z-20 mt-2 w-32 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition-opacity duration-300 ease-out focus:outline-none">
           {userNavigation.map((item) => (
             <MenuItem key={item.name}>
               {({ active }) => (
                 <button
                   className={classNames(
                     active ? "bg-[#7a56d7] text-white" : "text-gray-700",
-                    "flex items-center gap-1 w-full px-4 py-2 text-sm " + // Set w-full to make the button take full width
+                    "flex items-center gap-1 w-full px-4 py-2 text-sm " +
                       hoverStyle
                   )}
                   onClick={() => {
                     if (item.name === "Sign out") {
-                      handleSignOut();
+                      handleSignOut(); // Show the logout modal
                     } else {
                       handleNavigation(item.href);
                     }
@@ -167,6 +187,14 @@ function NotificationAndUser() {
           ))}
         </MenuItems>
       </Menu>
+
+      {/* Use the imported LogoutModal component here */}
+      {logoutModalOpen && (
+        <LogoutModal
+          onConfirm={handleLogoutConfirm}
+          onCancel={handleLogoutCancel}
+        />
+      )}
     </div>
   );
 }
@@ -177,9 +205,9 @@ function Navbar({ toggleSidebar }) {
       <div className="flex items-center space-x-4">
         <button
           onClick={toggleSidebar}
-          className="lg:hidden p-2 focus:outline-none"
+          className="lg:hidden p-2 focus:outline-none transition-transform duration-300 ease-in-out hover:rotate-90"
         >
-          <IoMdMenu className="h-6 w-6" />
+          <FontAwesomeIcon icon={faBars} className="h-6 w-6 text-gray-800" />
         </button>
       </div>
 
