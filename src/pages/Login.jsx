@@ -49,6 +49,16 @@ const Login = () => {
 
     console.log("Login successful:", { email, password });
     setLoading(true);
+
+    // Set the user's email and name in local storage
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({
+        name: "User Name", // Replace with actual name or fetch it from your API
+        email: email,
+      })
+    );
+
     localStorage.setItem("token", "user-authenticated-token");
 
     setTimeout(() => {
@@ -128,7 +138,12 @@ const Login = () => {
             <div className="flex items-center border-b-2 border-gray-300 py-2 gap-2">
               <MdOutlineMailLock className="text-2xl text-gray-300" />
               <input
-                className="appearance-none bg-transparent border-none w-full text-gray-100 mr-3 py-1 leading-tight focus:outline-none transition duration-200 ease-in-out placeholder:text-gray-400 hover:border-blue-500 focus:border-blue-500"
+                style={{
+                  backgroundColor: "transparent",
+                  border: "none",
+                  color: "#ffffff",
+                }}
+                className="appearance-none w-full mr-3 py-1 leading-tight focus:outline-none transition duration-200 ease-in-out placeholder:text-gray-400 hover:border-blue-500 focus:border-blue-500"
                 type="email"
                 id="email"
                 placeholder="Email"
@@ -142,7 +157,12 @@ const Login = () => {
             <div className="flex items-center border-b-2 border-gray-300 py-2 gap-2 relative">
               <GiPadlock className="text-2xl text-gray-300" />
               <input
-                className="appearance-none bg-transparent border-none w-full text-gray-100 mr-3 py-1 leading-tight focus:outline-none transition duration-200 ease-in-out placeholder:text-gray-400 hover:border-blue-500 focus:border-blue-500"
+                style={{
+                  backgroundColor: "transparent",
+                  border: "none",
+                  color: "#ffffff",
+                }}
+                className="appearance-none w-full mr-3 py-1 leading-tight focus:outline-none transition duration-200 ease-in-out placeholder:text-gray-400 hover:border-blue-500 focus:border-blue-500"
                 type={showPassword ? "text" : "password"}
                 id="password"
                 placeholder="Password"

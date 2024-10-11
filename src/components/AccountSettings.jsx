@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import LogoutModal from "./LogoutModal"; // Adjust the import path as needed
+import { ModalContext } from "../services/ModalContext"; // Import ModalContext
 
 const Settings = () => {
+  const { isLogoutModalOpen, openLogoutModal, closeLogoutModal } =
+    useContext(ModalContext); // Get modal context values
   const [isVisible, setIsVisible] = useState(false);
-  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false); // State for LogoutModal
 
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setIsVisible(true);
-    }, 200); // Add delay for fade-in effect
+    }, 200); // Delay for fade-in effect
+
+    return () => clearTimeout(timer); // Cleanup timer on unmount
   }, []);
 
   const handleSubmit = (event) => {
@@ -34,6 +38,8 @@ const Settings = () => {
           <p className="mb-4">
             Edit your account settings and change your password
           </p>
+
+          {/* Email field */}
           <div className="mb-4 border-t border-gray-200 py-2">
             <label
               className="block text-sm text-black font-bold"
@@ -46,24 +52,28 @@ const Settings = () => {
               id="email"
               placeholder="godwinekoh@gmail.com"
               className="mt-1 block w-full rounded-md shadow-sm p-2 bg-[#f4f4f9] border-gray-300 focus:outline-none focus:ring-4 transition-all duration-300"
+              readOnly // Prevent editing
             />
           </div>
 
+          {/* Current Password field */}
           <div className="mb-4">
             <label
               className="block text-sm text-black font-bold"
               htmlFor="currentPassword"
             >
-              Password
+              Current Password
             </label>
             <input
               type="password"
               id="currentPassword"
               placeholder="Enter current password"
               className="mt-1 block w-full rounded-md shadow-sm p-2 bg-[#f4f4f9] border-gray-300 focus:outline-none focus:ring-4 transition-all duration-300"
+              required // Required for better validation
             />
           </div>
 
+          {/* New Password field */}
           <div className="mb-4">
             <label
               className="block text-sm text-black font-bold"
@@ -76,9 +86,11 @@ const Settings = () => {
               id="newPassword"
               placeholder="Enter new password"
               className="mt-1 block w-full rounded-md shadow-sm p-2 bg-[#f4f4f9] border-gray-300 focus:outline-none focus:ring-4 transition-all duration-300"
+              required // Required for better validation
             />
           </div>
 
+          {/* Confirm Password field */}
           <div className="mb-4 border-b border-gray-200 py-2">
             <label
               className="block text-sm text-black font-bold"
@@ -91,9 +103,11 @@ const Settings = () => {
               id="confirmPassword"
               placeholder="Re-type new password"
               className="mt-1 block w-full rounded-md shadow-sm p-2 bg-[#f4f4f9] border-gray-300 focus:outline-none focus:ring-4 transition-all duration-300"
+              required // Required for better validation
             />
           </div>
 
+          {/* Submit button */}
           <button
             type="submit"
             className="bg-red-600 text-white font-bold py-2 px-4 rounded-xl shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-110 hover:shadow-2xl hover:opacity-90 focus:outline-none focus:ring-4 focus:ring-red-500 text-sm md:text-base md:py-2 md:px-4"
@@ -103,6 +117,7 @@ const Settings = () => {
         </form>
       </div>
 
+      {/* Account options */}
       <div className="md:w-1/3 px-6 mt-6 py-6 transition-opacity duration-700 ease-in-out hover:opacity-90">
         <h3 className="text-[24px] font-bold mb-4">Account</h3>
         <ul className="space-y-2">
@@ -128,7 +143,7 @@ const Settings = () => {
           </li>
           <li>
             <button
-              onClick={() => setIsLogoutModalOpen(true)} // Show modal when clicked
+              onClick={openLogoutModal} // Use context method to show modal
               className="text-gray-500 hover:underline transition-all duration-300 ease-in-out hover:text-gray-800"
             >
               Close Account
@@ -139,9 +154,7 @@ const Settings = () => {
 
       {/* Logout Modal */}
       {isLogoutModalOpen && (
-        <LogoutModal
-          onClose={() => setIsLogoutModalOpen(false)} // Close modal function
-        />
+        <LogoutModal onClose={closeLogoutModal} /> // Use context method to close modal
       )}
     </div>
   );

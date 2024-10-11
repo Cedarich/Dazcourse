@@ -1,19 +1,24 @@
-import { useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react"; // Include useState and useEffect
+import { ModalContext } from "../services/ModalContext"; // Ensure the path is correct
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
-import { MdMessage, MdUpdate, MdPersonAdd } from "react-icons/md";
+import {
+  Menu as HeadlessMenu,
+  MenuButton,
+  MenuItems,
+  MenuItem,
+} from "@headlessui/react";
+import {
+  MdMessage,
+  MdUpdate,
+  MdPersonAdd,
+  MdAccountCircle,
+} from "react-icons/md"; // Importing the account icon
 import { FaUser, FaCog, FaSignOutAlt, FaHeart } from "react-icons/fa";
 import { BsBellFill } from "react-icons/bs";
 import "../ui/Styles.css"; // Ensure correct path
 import LogoutModal from "../components/LogoutModal"; // Import your LogoutModal
-
-const user = {
-  name: "Godwin Ekoh",
-  email: "godwinekoh@gmail.com",
-  imageUrl: require("../assests/images/newprof.jpg"),
-};
 
 const userNavigation = [
   {
@@ -49,10 +54,18 @@ function classNames(...classes) {
 
 function NotificationAndUser() {
   const navigate = useNavigate();
+  const { isLogoutModalOpen, setLogoutModalOpen } = useContext(ModalContext); // Use the context
+
   const [isLiked, setIsLiked] = useState(false);
   const [isBellClicked, setIsBellClicked] = useState(false);
   const [triggerGlitter, setTriggerGlitter] = useState(false);
-  const [logoutModalOpen, setLogoutModalOpen] = useState(false); // State for LogoutModal
+
+  // Get user data from local storage
+  const userData = JSON.parse(localStorage.getItem("userData")) || {
+    name: "Guest", // Default name if no user data found
+    email: "guest@example.com", // Default email if no user data found
+    imageUrl: require("../assests/images/newprof.jpg"), // Default profile image
+  };
 
   const toggleLike = () => {
     setIsLiked(!isLiked);
@@ -76,6 +89,7 @@ function NotificationAndUser() {
 
   const handleLogoutConfirm = () => {
     localStorage.removeItem("userData");
+    localStorage.removeItem("token"); // Clear token if needed
     navigate("/");
     setLogoutModalOpen(false);
   };
@@ -98,7 +112,7 @@ function NotificationAndUser() {
       <button
         type="button"
         onClick={toggleLike}
-        className="p-1 relative text-gray-400 hover:text-gray-500 transition-colors duration-200 focus:outline-none"
+        className="p-1 mt-1 relative text-gray-400 hover:text-gray-500 transition-colors duration-200 focus:outline-none"
       >
         <div className="glitter-sparkles">
           <FaHeart
@@ -106,7 +120,7 @@ function NotificationAndUser() {
               isLiked ? "text-red-500 scale-110" : "text-gray-400"
             }`}
           />
-          {/* Sparkle elements will be rendered here */}
+          {/* Sparkle elements */}
           {triggerGlitter &&
             [...Array(15)].map((_, index) => (
               <span key={index} className="sparkle"></span>
@@ -114,7 +128,7 @@ function NotificationAndUser() {
         </div>
       </button>
 
-      <Menu as="div" className="relative z-10">
+      <HeadlessMenu as="div" className="relative z-10">
         <MenuButton
           onClick={toggleBell}
           className={`flex-shrink-0 rounded-full bg-white p-1 transition-colors duration-300 focus:outline-none`}
@@ -147,18 +161,15 @@ function NotificationAndUser() {
             ))}
           </div>
         </MenuItems>
-      </Menu>
+      </HeadlessMenu>
 
-      <Menu as="div" className="relative z-10">
+      <HeadlessMenu as="div" className="relative z-10">
         <MenuButton className="flex items-center space-x-2 rounded-full bg-white border-2 border-transparent hover:border-[#7a56d7] transition-colors duration-300 focus:outline-none">
-          <img
-            alt="User Profile"
-            src={user.imageUrl}
-            className="h-8 w-8 rounded-full"
-          />
+          <MdAccountCircle className="h-8 w-8 text-gray-400" />{" "}
+          {/* Modern user icon */}
           <div className="text-sm">
-            <p className="font-medium text-left">{user.name}</p>
-            <p className="text-xs text-gray-500">{user.email}</p>
+            <p className="font-medium text-left">{userData.name}</p>
+            <p className="text-xs text-gray-500">{userData.email}</p>
           </div>
         </MenuButton>
         <MenuItems className="absolute right-0 z-20 mt-2 w-32 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition-opacity duration-300 ease-out focus:outline-none">
@@ -186,10 +197,10 @@ function NotificationAndUser() {
             </MenuItem>
           ))}
         </MenuItems>
-      </Menu>
+      </HeadlessMenu>
 
-      {/* Use the imported LogoutModal component here */}
-      {logoutModalOpen && (
+      {/* Render LogoutModal */}
+      {isLogoutModalOpen && (
         <LogoutModal
           onConfirm={handleLogoutConfirm}
           onCancel={handleLogoutCancel}
