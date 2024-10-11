@@ -143,7 +143,7 @@ const Settings = () => {
           </li>
           <li>
             <button
-              onClick={openLogoutModal} // Use context method to show modal
+              onClick={openLogoutModal}
               className="text-gray-500 hover:underline transition-all duration-300 ease-in-out hover:text-gray-800"
             >
               Close Account
@@ -153,9 +153,7 @@ const Settings = () => {
       </div>
 
       {/* Logout Modal */}
-      {isLogoutModalOpen && (
-        <LogoutModal onClose={closeLogoutModal} /> // Use context method to close modal
-      )}
+      {isLogoutModalOpen && <LogoutModal onClose={closeLogoutModal} />}
     </div>
   );
 };
