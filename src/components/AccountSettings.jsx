@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import LogoutModal from "./LogoutModal"; // Adjust the import path as needed
-import { ModalContext } from "../services/ModalContext"; // Import ModalContext
+import { ModalContext } from "../services/ModalContext";
 
 const Settings = () => {
   const { isLogoutModalOpen, openLogoutModal, closeLogoutModal } =
