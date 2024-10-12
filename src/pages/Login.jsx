@@ -24,7 +24,7 @@ const Login = () => {
     // Trigger logo visibility after component mounts
     const timer = setTimeout(() => {
       setShowLogo(true);
-    }, 300); // Delay before showing the logo
+    }, 400); // Delay before showing the logo
 
     return () => clearTimeout(timer); // Cleanup on unmount
   }, []);
@@ -120,13 +120,14 @@ const Login = () => {
           <img
             src={Logo}
             alt="Logo"
-            className="transition-opacity duration-500"
+            className="transition-opacity duration-500 animate-correspond-bounce"
           />
+
           <span>
             <img
               src={daz}
               alt="DazCourse"
-              className="transition-opacity duration-500"
+              className="transition-opacity duration-500 animate-correspond-bounce-delayed"
             />
           </span>
         </div>

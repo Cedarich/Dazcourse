@@ -316,3 +316,33 @@ body {
 }
 
 /* Glittering */
+
+@layer utilities {
+  @keyframes correspond-bounce {
+    0%,
+    100% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    25% {
+      transform: translateY(-10px) scale(1.05);
+      opacity: 0.9;
+    }
+    50% {
+      transform: translateY(0px) scale(0.95);
+      opacity: 1;
+    }
+    75% {
+      transform: translateY(-5px) scale(1.02);
+    }
+  }
+
+  .animate-correspond-bounce {
+    animation: correspond-bounce 3s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+  }
+
+  .animate-correspond-bounce-delayed {
+    animation: correspond-bounce 3s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+    animation-delay: 0.3s; /* Slight delay for correspondence */
+  }
+}
