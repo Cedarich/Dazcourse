@@ -120,14 +120,14 @@ const Login = () => {
           <img
             src={Logo}
             alt="Logo"
-            className="transition-opacity duration-500 animate-correspond-bounce"
+            className="transition-opacity duration-500"
           />
 
           <span>
             <img
               src={daz}
               alt="DazCourse"
-              className="transition-opacity duration-500 animate-correspond-bounce-delayed"
+              className="transition-opacity duration-500"
             />
           </span>
         </div>
@@ -135,7 +135,7 @@ const Login = () => {
         <div className="mt-12">
           {error && <p className="text-red-600 mb-4">{error}</p>}
 
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <div className="flex items-center border-b-2 border-gray-300 py-2 gap-2">
               <MdOutlineMailLock className="text-2xl text-gray-300" />
               <input
@@ -152,22 +152,99 @@ const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-          </div>
-
-          <div className="mb-6">
-            <div className="flex items-center border-b-2 border-gray-300 py-2 gap-2 relative">
-              <GiPadlock className="text-2xl text-gray-300" />
+          </div> */}
+          <div className="mb-4">
+            <div className="flex items-center border-b-2 border-gray-300 py-2 gap-2">
+              <MdOutlineMailLock
+                className={`text-2xl text-gray-300 transition-transform duration-300 ease-in-out transform ${
+                  email.length > 0 ? "text-[#7a56d7]" : "text-gray-300"
+                }`}
+                id="mailIcon"
+              />
               <input
                 style={{
                   backgroundColor: "transparent",
                   border: "none",
                   color: "#ffffff",
                 }}
-                className="appearance-none w-full mr-3 py-1 leading-tight focus:outline-none transition duration-200 ease-in-out placeholder:text-gray-400 hover:border-blue-500 focus:border-blue-500"
+                className="appearance-none w-full mr-3 py-1 leading-tight focus:outline-none transition duration-200 ease-in-out placeholder:text-gray-400 hover:border-[#7a56d7] focus:border-[#7a56d7]"
+                type="email"
+                id="email"
+                placeholder="Email"
+                value={email}
+                onFocus={() => {
+                  const mailIcon = document.getElementById("mailIcon");
+                  mailIcon.classList.add("animate-bounce");
+                  mailIcon.classList.add("text-[#7a56d7]");
+                }}
+                onBlur={() => {
+                  const mailIcon = document.getElementById("mailIcon");
+                  if (!email) {
+                    mailIcon.classList.remove(
+                      "animate-bounce",
+                      "text-[#7a56d7]"
+                    );
+                  }
+                }}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <style>
+            {`
+    .animate-bounce {
+      animation: bounce 0.6s ease-in-out;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+        color: #7a56d7;
+      }
+      50% {
+        transform: translateY(-10px);
+        color: #7a56d7;
+      }
+    }
+  `}
+          </style>
+
+          <div className="mb-6">
+            <div className="flex items-center border-b-2 border-gray-300 py-2 gap-2 relative">
+              <GiPadlock
+                className={`text-2xl text-gray-300 transition-transform duration-300 ease-in-out transform ${
+                  password.length > 0
+                    ? "text-[#7a56d7] animate-bounce"
+                    : "text-gray-300"
+                }`}
+                id="lockIcon"
+              />
+              <input
+                style={{
+                  backgroundColor: "transparent",
+                  border: "none",
+                  color: "#ffffff",
+                }}
+                className="appearance-none w-full mr-3 py-1 leading-tight focus:outline-none transition duration-200 ease-in-out placeholder:text-gray-400 hover:border-[#7a56d7] focus:border-[#7a56d7]"
                 type={showPassword ? "text" : "password"}
                 id="password"
                 placeholder="Password"
                 value={password}
+                onFocus={() => {
+                  const lockIcon = document.getElementById("lockIcon");
+                  lockIcon.classList.add("animate-bounce");
+                  lockIcon.classList.add("text-[#7a56d7]");
+                }}
+                onBlur={() => {
+                  const lockIcon = document.getElementById("lockIcon");
+                  if (!password) {
+                    lockIcon.classList.remove(
+                      "animate-bounce",
+                      "text-[#7a56d7]"
+                    );
+                  }
+                }}
                 onChange={(e) => setPassword(e.target.value)}
               />
               <div
@@ -182,6 +259,25 @@ const Login = () => {
               </div>
             </div>
           </div>
+
+          <style>
+            {`
+    .animate-bounce {
+      animation: bounce 0.6s ease-in-out;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+        color: #7a56d7;
+      }
+      50% {
+        transform: translateY(-10px);
+        color: #7a56d7;
+      }
+    }
+  `}
+          </style>
 
           <div className="flex justify-between items-center mb-6">
             <label className="inline-flex items-center">

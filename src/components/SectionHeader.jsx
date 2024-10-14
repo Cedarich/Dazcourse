@@ -10,15 +10,15 @@ const YourComponent = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row justify-between items-center mx-auto py-2">
+    <div className="flex flex-col md:flex-row justify-between items-center py-2">
       {/* Smooth scaling effect on hover */}
-      <h4 className="text-[24px] font-bold transition-transform duration-300 transform hover:scale-105 text-center md:text-left mb-2 md:mb-0">
+      <h4 className="text-[24px] font-bold transition-transform duration-300 transform hover:scale-105 md:text-left mb-2 md:mb-0">
         Continue Learning
       </h4>
 
       <span
         onClick={handleNavigate}
-        className="text-[#7a56d7] cursor-pointer text-[14px] flex items-center gap-1 transition-all duration-300 ease-in-out hover:text-[#6a5df7] group text-center md:text-left"
+        className="text-[#7a56d7] cursor-pointer text-[14px] flex items-center gap-1 transition-all duration-300 ease-in-out hover:text-[#6a5df7] group md:text-left"
       >
         See All
         <FiArrowRight className="transition-transform duration-300 transform group-hover:translate-x-1" />

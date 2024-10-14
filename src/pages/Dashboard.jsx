@@ -51,7 +51,7 @@ const Dashboard = () => {
             id="section-header"
             className={`px-2 mt-4 max-w-full sm:max-w-[65%] transition-opacity duration-700 ease-in-out ${
               isVisible ? "opacity-100" : "opacity-0"
-            }`}
+            } text-left`}
           >
             <SectionHeader />
           </div>
