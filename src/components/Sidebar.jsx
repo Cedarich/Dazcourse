@@ -45,6 +45,7 @@ function Sidebar({ isOpen, toggleSidebar }) {
             <NavLink
               key={to}
               to={to}
+              onClick={toggleSidebar} // This will close the sidebar when any link is clicked
               className={({ isActive }) =>
                 isActive
                   ? "flex items-center space-x-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white p-3 rounded-lg transition-transform duration-300 ease-in-out transform scale-105 shadow-md"

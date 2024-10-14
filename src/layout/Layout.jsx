@@ -13,7 +13,6 @@ const Layout = () => {
   return (
     <div className="flex flex-col font-mullish min-h-screen">
       {" "}
-      {/* Changed h-full to min-h-screen */}
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       <div className="flex flex-col flex-1 ml-0 lg:ml-52 transition-all duration-300 ease-in-out ">
         {" "}
