@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react"; // Import useEffect
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Loginbg from "../assests/images/Loginbg.jpg";
 import NoiseTexture from "../assests/images/NoiseTexture.jpg";
@@ -14,19 +16,17 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [isBouncing, setIsBouncing] = useState(false);
-  const [showLogo, setShowLogo] = useState(false); // State for logo visibility
+  const [showLogo, setShowLogo] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Trigger logo visibility after component mounts
     const timer = setTimeout(() => {
       setShowLogo(true);
-    }, 400); // Delay before showing the logo
+    }, 400);
 
-    return () => clearTimeout(timer); // Cleanup on unmount
+    return () => clearTimeout(timer);
   }, []);
 
   const togglePasswordVisibility = () => {
@@ -35,26 +35,24 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError("");
 
     if (!email.includes("@gmail")) {
-      setError("Email must contain @gmail");
+      toast.error("Email must contain @gmail");
       return;
     }
 
     if (password.length < 6) {
-      setError("Password must be at least 6 characters");
+      toast.error("Password must be at least 6 characters");
       return;
     }
 
     console.log("Login successful:", { email, password });
     setLoading(true);
 
-    // Set the user's email and name in local storage
     localStorage.setItem(
       "userData",
       JSON.stringify({
-        name: "User Name", // Replace with actual name or fetch it from your API
+        name: "User Name",
         email: email,
       })
     );
@@ -111,7 +109,6 @@ const Login = () => {
           }}
         ></div>
 
-        {/* Logo Section with Animation */}
         <div
           className={`flex items-center justify-center gap-1 ${
             showLogo ? "animate-logo" : "opacity-0"
@@ -133,26 +130,25 @@ const Login = () => {
         </div>
 
         <div className="mt-12">
-          {error && <p className="text-red-600 mb-4">{error}</p>}
+          <style>
+            {`
+              .animate-bounce {
+                animation: bounce 0.6s ease-in-out;
+              }
 
-          {/* <div className="mb-4">
-            <div className="flex items-center border-b-2 border-gray-300 py-2 gap-2">
-              <MdOutlineMailLock className="text-2xl text-gray-300" />
-              <input
-                style={{
-                  backgroundColor: "transparent",
-                  border: "none",
-                  color: "#ffffff",
-                }}
-                className="appearance-none w-full mr-3 py-1 leading-tight focus:outline-none transition duration-200 ease-in-out placeholder:text-gray-400 hover:border-blue-500 focus:border-blue-500"
-                type="email"
-                id="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-          </div> */}
+              @keyframes bounce {
+                0%, 100% {
+                  transform: translateY(0);
+                  color: #7a56d7;
+                }
+                50% {
+                  transform: translateY(-10px);
+                  color: #7a56d7;
+                }
+              }
+            `}
+          </style>
+
           <div className="mb-4">
             <div className="flex items-center border-b-2 border-gray-300 py-2 gap-2">
               <MdOutlineMailLock
@@ -190,25 +186,6 @@ const Login = () => {
               />
             </div>
           </div>
-
-          <style>
-            {`
-    .animate-bounce {
-      animation: bounce 0.6s ease-in-out;
-    }
-
-    @keyframes bounce {
-      0%, 100% {
-        transform: translateY(0);
-        color: #7a56d7;
-      }
-      50% {
-        transform: translateY(-10px);
-        color: #7a56d7;
-      }
-    }
-  `}
-          </style>
 
           <div className="mb-6">
             <div className="flex items-center border-b-2 border-gray-300 py-2 gap-2 relative">
@@ -260,25 +237,6 @@ const Login = () => {
             </div>
           </div>
 
-          <style>
-            {`
-    .animate-bounce {
-      animation: bounce 0.6s ease-in-out;
-    }
-
-    @keyframes bounce {
-      0%, 100% {
-        transform: translateY(0);
-        color: #7a56d7;
-      }
-      50% {
-        transform: translateY(-10px);
-        color: #7a56d7;
-      }
-    }
-  `}
-          </style>
-
           <div className="flex justify-between items-center mb-6">
             <label className="inline-flex items-center">
               <input type="checkbox" className="form-checkbox text-blue-600" />
@@ -291,14 +249,16 @@ const Login = () => {
 
           <button
             onClick={handleButtonClick}
-            className={`bg-gradient-to-r from-[#5933d2] to-[#7A4DD2] text-white font-bold py-2 px-4 rounded-xl w-full shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-110 hover:shadow-2xl hover:opacity-90 focus:outline-none focus:ring-4 focus:ring-[#5933d2] ${
-              isBouncing ? "bounce" : ""
+            className={`bg-gradient-to-r from-[#5933d2] to-[#7A4DD2] text-white font-bold py-2 px-4 rounded-xl w-full shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-110 hover:shadow-2xl hover:opacity-90 focus:outline-none focus:ring-4 focus:ring-[#7a56d7] ${
+              isBouncing ? "animate-bounce" : ""
             }`}
           >
             LOGIN
           </button>
         </div>
       </div>
+
+      <ToastContainer />
     </div>
   );
 };
